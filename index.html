@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SupplySecure - Supply Chain Management Platform</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">SupplySecure</div>
+        <ul class="nav-links">
+            <li><a href="#features">Features</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="#login" class="login-btn">Login</a></li>
+        </ul>
+    </nav>
+
+    <!-- Add the modal HTML structure -->
+    <div class="modal-overlay" id="authModal">
+        <div class="modal-container">
+            <button class="close-btn" id="closeModal">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="modal-forms">
+                <!-- Login Form -->
+                <form id="loginForm" class="auth-form active">
+                    <h2>Welcome Back</h2>
+                    <p class="form-subtitle">Login to your account</p>
+                    
+                    <div class="input-group">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" placeholder="Email" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" placeholder="Password" required>
+                        <i class="fas fa-eye toggle-password"></i>
+                    </div>
+                    
+                    <div class="form-links">
+                        <a href="#" class="forgot-password">Forgot Password?</a>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">Login</button>
+                    
+                    <div class="social-login">
+                        <p>Or continue with</p>
+                        <div class="social-buttons">
+                            <button type="button" class="social-btn google">
+                                <i class="fab fa-google"></i>
+                            </button>
+                            <button type="button" class="social-btn facebook">
+                                <i class="fab fa-facebook-f"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <p class="switch-form">
+                        Don't have an account? <a href="#" id="showSignup">Sign up</a>
+                    </p>
+                </form>
+
+                <!-- Sign Up Form -->
+                <form id="signupForm" class="auth-form">
+                    <h2>Create Account</h2>
+                    <p class="form-subtitle">Join SupplySecure today</p>
+                    
+                    <div class="input-group">
+                        <i class="fas fa-user"></i>
+                        <input type="text" placeholder="Full Name" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" placeholder="Email" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" placeholder="Password" required>
+                        <i class="fas fa-eye toggle-password"></i>
+                    </div>
+
+                    <div class="input-group">
+                        <i class="fas fa-users"></i>
+                        <select required>
+                            <option value="" disabled selected>Select Role</option>
+                            <option value="supplier">Supplier</option>
+                            <option value="manufacturer">Manufacturer</option>
+                            <option value="logistics">Logistics</option>
+                            <option value="retailer">Retailer</option>
+                            <option value="customer">Customer</option>
+                        </select>
+                    </div>
+
+                    <div class="terms-check">
+                        <input type="checkbox" id="terms" required>
+                        <label for="terms">I agree to the Terms & Conditions</label>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">Sign Up</button>
+                    
+                    <p class="switch-form">
+                        Already have an account? <a href="#" id="showLogin">Login</a>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Video Demo Modal -->
+    <div class="modal-overlay" id="videoModal">
+        <div class="modal-container video-modal">
+            <button class="close-btn" id="closeVideoModal">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="video-container">
+                <iframe id="demoVideo" 
+                        width="100%" 
+                        height="100%" 
+                        src="" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Modal -->
+    <div class="modal-overlay" id="featuresModal">
+        <div class="modal-container features-modal">
+            <button class="close-btn" id="closeFeaturesModal">
+                <i class="fas fa-times"></i>
+            </button>
+            <h2>SupplySecure Features</h2>
+            <div class="features-content">
+                <div class="feature-item">
+                    <i class="fas fa-shield-alt"></i>
+                    <div class="feature-details">
+                        <h3>Blockchain Security</h3>
+                        <p>Advanced encryption and immutable ledger technology ensure complete data security and transparency.</p>
+                        <ul>
+                            <li>End-to-end encryption</li>
+                            <li>Immutable transaction records</li>
+                            <li>Decentralized verification</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-qrcode"></i>
+                    <div class="feature-details">
+                        <h3>Smart Tracking</h3>
+                        <p>Real-time product tracking with QR code integration and GPS monitoring.</p>
+                        <ul>
+                            <li>QR code verification</li>
+                            <li>Real-time location updates</li>
+                            <li>Temperature monitoring</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-chart-line"></i>
+                    <div class="feature-details">
+                        <h3>Analytics Dashboard</h3>
+                        <p>Comprehensive analytics tools for supply chain optimization.</p>
+                        <ul>
+                            <li>Performance metrics</li>
+                            <li>Predictive analytics</li>
+                            <li>Custom reporting</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="animate-fade-in">SupplySecure</h1>
+            <h2 class="animate-fade-in">Bringing Trust & Transparency to Every Product Journey!</h2>
+            <p class="animate-fade-in">Verify product authenticity, track real-time shipments, and ensure end-to-end supply chain integrity with blockchain technology.</p>
+            <div class="cta-buttons animate-fade-in">
+                <button class="primary-btn">Get Started <i class="fas fa-arrow-right"></i></button>
+                <button class="secondary-btn">Watch Demo</button>
+            </div>
+        </div>
+        <div class="hero-background"></div>
+    </section>
+
+    <section class="about-section" id="about">
+        <div class="container">
+            <h2 class="section-title">Why Choose SupplySecure?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Blockchain Security</h3>
+                    <p>Immutable records ensure complete transparency and security throughout the supply chain.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-qrcode"></i>
+                    <h3>Product Tracking</h3>
+                    <p>Real-time tracking and QR code verification for authentic product identification.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Analytics Dashboard</h3>
+                    <p>Comprehensive analytics and reporting for better supply chain decisions.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-handshake"></i>
+                    <h3>Stakeholder Trust</h3>
+                    <p>Build trust among suppliers, manufacturers, retailers, and end customers.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>SupplySecure</h3>
+                <p>Revolutionizing supply chain management with blockchain technology.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Contact Us</h4>
+                <ul class="contact-info">
+                    <li><i class="fas fa-envelope"></i> info@supplysecure.com</li>
+                    <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                    <li><i class="fas fa-map-marker-alt"></i> New York, NY 10001</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 SupplySecure. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html> 
