@@ -342,7 +342,8 @@ body {
 }
 
 .input-group input,
-.input-group select {
+.input-group select,
+.input-group select option {
     width: 100%;
     padding: 1rem 2.5rem;
     background: var(--glass-bg);
@@ -380,6 +381,12 @@ body {
 .input-group input::placeholder,
 .input-group select::placeholder {
     color: var(--text-muted);
+}
+
+.input-group select option {
+    background: var(--background-color);
+    color: var(--text-primary);
+    padding: 1rem;
 }
 
 .submit-btn {
@@ -1030,4 +1037,245 @@ html {
         rgba(15, 23, 42, 0.8)
     );
     pointer-events: none;
+}
+
+/* Notification Styles */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 25px;
+    border-radius: 8px;
+    color: white;
+    font-weight: 500;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    transform: translateX(120%);
+    transition: transform 0.3s ease-in-out;
+}
+
+.notification.show {
+    transform: translateX(0);
+}
+
+.notification.success {
+    background-color: #4CAF50;
+}
+
+.notification.error {
+    background-color: #f44336;
+}
+
+.notification.info {
+    background-color: #2196F3;
+}
+
+/* Loading state for submit buttons */
+.submit-btn.loading {
+    position: relative;
+    color: transparent;
+}
+
+.submit-btn.loading::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid var(--text-primary);
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: button-loading 0.8s linear infinite;
+}
+
+@keyframes button-loading {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* MetaMask Button Styles */
+.metaMask-btn {
+    background-color: #f6851b;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+    margin-left: 20px;
+}
+
+.metaMask-btn:hover {
+    background-color: #e2761b;
+}
+
+#walletStatus {
+    margin-left: 10px;
+    color: #666;
+    font-size: 0.9em;
+}
+
+#walletStatus.connected {
+    color: #4CAF50;
+    font-weight: 500;
+}
+
+/* Retailer Dashboard Styles */
+.dashboard-section {
+    margin-bottom: 2rem;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    padding: 1.5rem;
+}
+
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.product-card {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.product-card .card-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.product-card .card-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.product-card .card-title {
+    font-size: 1.2rem;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.product-card .card-content {
+    color: var(--text-secondary);
+}
+
+.product-card .action-btn {
+    display: inline-block;
+    background: var(--primary-color);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-top: 1rem;
+    transition: all 0.3s;
+    border: none;
+    cursor: pointer;
+}
+
+.product-card .action-btn:hover {
+    background: var(--accent-color);
+}
+
+.product-card .action-btn.transfer-btn {
+    background: var(--accent-color);
+}
+
+.product-card .action-btn.transfer-btn:hover {
+    background: var(--primary-color);
+}
+
+/* Transfer Section Styles */
+.transfer-section {
+    margin-top: 2rem;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    padding: 1.5rem;
+}
+
+.transfer-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.transfer-form .form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.transfer-form .form-group label {
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.transfer-form .form-group input {
+    padding: 0.75rem;
+    border: 1px solid var(--glass-border);
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+}
+
+.transfer-form .form-actions {
+    display: flex;
+    align-items: flex-end;
+}
+
+.transfer-form .submit-btn {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+    height: 100%;
+}
+
+.transfer-form .submit-btn:hover {
+    background: var(--accent-color);
+}
+
+.purchase-btn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+}
+
+.purchase-btn:hover {
+    background-color: #45a049;
+}
+
+.purchase-btn:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
 } 

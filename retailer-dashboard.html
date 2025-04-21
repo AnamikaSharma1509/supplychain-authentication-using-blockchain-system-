@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retailer Dashboard - SupplySecure</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .dashboard-container {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        
+        .dashboard-title {
+            font-size: 2rem;
+            color: var(--text-primary);
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .logout-btn {
+            background: none;
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .logout-btn:hover {
+            background: var(--primary-color);
+        }
+        
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .dashboard-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+        }
+        
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        
+        .card-title {
+            font-size: 1.2rem;
+            color: var(--text-primary);
+        }
+        
+        .card-content {
+            color: var(--text-secondary);
+        }
+        
+        .action-btn {
+            display: inline-block;
+            background: var(--primary-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .action-btn:hover {
+            background: var(--accent-color);
+        }
+        
+        /* Product Verification Styles */
+        .verification-section {
+            margin-top: 2rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            padding: 1.5rem;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .verification-form {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group label {
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+        
+        .form-group input {
+            padding: 0.75rem;
+            border: 1px solid var(--glass-border);
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+        }
+        
+        .form-actions {
+            display: flex;
+            align-items: flex-end;
+        }
+        
+        .submit-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            height: 100%;
+        }
+        
+        .submit-btn:hover {
+            background: var(--accent-color);
+        }
+        
+        .verification-result {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border: 1px solid var(--glass-border);
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.05);
+            display: none;
+        }
+        
+        .verification-result.active {
+            display: block;
+        }
+        
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .result-title {
+            font-size: 1.2rem;
+            color: var(--text-primary);
+        }
+        
+        .result-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .status-valid {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4CAF50;
+        }
+        
+        .status-invalid {
+            background: rgba(244, 67, 54, 0.2);
+            color: #F44336;
+        }
+        
+        .result-details {
+            margin-top: 1rem;
+        }
+        
+        .detail-item {
+            display: flex;
+            margin-bottom: 0.5rem;
+        }
+        
+        .detail-label {
+            font-weight: bold;
+            width: 150px;
+            color: var(--text-primary);
+        }
+        
+        .detail-value {
+            color: var(--text-secondary);
+        }
+        
+        /* Transfer Section Styles */
+        .transfer-section {
+            margin-top: 2rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            padding: 1.5rem;
+        }
+        
+        .transfer-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .transfer-actions {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: flex-end;
+        }
+        
+        /* Notification Styles */
+        .notification {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            padding: 1rem;
+            border-radius: 5px;
+            color: white;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .notification.show {
+            opacity: 1;
+        }
+        
+        .notification.success {
+            background: #4CAF50;
+        }
+        
+        .notification.error {
+            background: #F44336;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">SupplySecure</div>
+        <ul class="nav-links">
+            <li><a href="#" class="active">Dashboard</a></li>
+            <li><a href="#inventory">Inventory</a></li>
+            <li><a href="#verify">Verify</a></li>
+            <li><a href="#transfer">Transfer</a></li>
+            <li><button class="logout-btn" id="logoutBtn">Logout</button></li>
+        </ul>
+    </nav>
+
+    <div class="dashboard-container">
+        <div class="dashboard-header">
+            <h1 class="dashboard-title">Retailer Dashboard</h1>
+            <div class="user-info">
+                <div class="user-avatar" id="userInitials"></div>
+                <button class="logout-btn" id="logoutBtn">Logout</button>
+            </div>
+        </div>
+
+        <!-- Available Products Section -->
+        <div class="dashboard-section">
+            <h2 class="section-title">Available Products</h2>
+            <div class="products-grid" id="availableProducts">
+                <!-- Products will be loaded here -->
+            </div>
+        </div>
+
+        <!-- My Products Section -->
+        <div class="dashboard-section">
+            <h2 class="section-title">My Products</h2>
+            <div class="products-grid" id="myProducts">
+                <!-- Owned products will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Product Verification Section -->
+        <div class="verification-section">
+            <h2 class="section-title">Verify Product</h2>
+            <div class="verification-form">
+                <div class="form-group">
+                    <label for="qrCode">QR Code Hash</label>
+                    <input type="text" id="qrCode" placeholder="Enter QR code hash">
+                </div>
+                <div class="form-actions">
+                    <button class="submit-btn" id="verifyBtn">Verify</button>
+                </div>
+            </div>
+            <div class="verification-result" id="verificationResult">
+                <!-- Verification results will be shown here -->
+            </div>
+        </div>
+
+        <!-- Transfer to Customer Section -->
+        <div class="transfer-section">
+            <h2 class="section-title">Transfer to Customer</h2>
+            <div class="transfer-form">
+                <div class="form-group">
+                    <label for="productId">Product ID</label>
+                    <input type="text" id="productId" placeholder="Enter product ID">
+                </div>
+                <div class="form-group">
+                    <label for="customerAddress">Customer Address</label>
+                    <input type="text" id="customerAddress" placeholder="Enter customer's Ethereum address">
+                </div>
+                <div class="form-actions">
+                    <button class="submit-btn" id="transferBtn">Transfer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="blockchain.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Load user info
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (!user) {
+                window.location.href = '/';
+                return;
+            }
+            document.getElementById('userInitials').textContent = user.username.charAt(0).toUpperCase();
+
+            // Load available products
+            loadAvailableProducts();
+            
+            // Load my products
+            loadMyProducts();
+
+            // Setup event listeners
+            document.getElementById('verifyBtn').addEventListener('click', verifyProduct);
+            document.getElementById('transferBtn').addEventListener('click', transferToCustomer);
+            document.getElementById('logoutBtn').addEventListener('click', logout);
+
+            // Function to load available products
+            async function loadAvailableProducts() {
+                try {
+                    const products = await BlockchainService.getAllProducts();
+                    const container = document.getElementById('availableProducts');
+                    
+                    if (products.length === 0) {
+                        container.innerHTML = '<p>No products available.</p>';
+                        return;
+                    }
+                    
+                    container.innerHTML = '';
+                    products.forEach(product => {
+                        const productCard = createProductCard(product);
+                        container.appendChild(productCard);
+                    });
+                } catch (error) {
+                    console.error('Error loading products:', error);
+                    const container = document.getElementById('availableProducts');
+                    container.innerHTML = `<p class="error">Error loading products: ${error.message}</p>`;
+                }
+            }
+
+            // Function to load my products
+            async function loadMyProducts() {
+                try {
+                    const response = await fetch('/api/blockchain/my-products', {
+                        headers: {
+                            'Authorization': `Bearer ${localStorage.getItem('token')}`
+                        }
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch my products');
+                    }
+                    
+                    const products = await response.json();
+                    const container = document.getElementById('myProducts');
+                    
+                    if (products.length === 0) {
+                        container.innerHTML = '<p>No products owned.</p>';
+                        return;
+                    }
+                    
+                    container.innerHTML = '';
+                    products.forEach(product => {
+                        const productCard = createProductCard(product, true);
+                        container.appendChild(productCard);
+                    });
+                } catch (error) {
+                    console.error('Error loading my products:', error);
+                    const container = document.getElementById('myProducts');
+                    container.innerHTML = `<p class="error">Error loading my products: ${error.message}</p>`;
+                }
+            }
+
+            // Function to create product card
+            function createProductCard(product, isOwned = false) {
+                const card = document.createElement('div');
+                card.className = 'dashboard-card';
+                card.innerHTML = `
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-box"></i>
+                        </div>
+                        <h3 class="card-title">${product.name}</h3>
+                    </div>
+                    <div class="card-content">
+                        <p>${product.description}</p>
+                        <p>Manufacturer: ${product.manufacturer_name}</p>
+                        <p>QR Code: ${product.qr_code_hash}</p>
+                        ${isOwned ? `
+                            <button class="action-btn transfer-btn" data-id="${product.id}">
+                                Transfer to Customer
+                            </button>
+                        ` : `
+                            <button class="action-btn purchase-btn" data-id="${product.id}">
+                                Purchase Product
+                            </button>
+                        `}
+                    </div>
+                `;
+                return card;
+            }
+
+            // Function to verify product
+            async function verifyProduct() {
+                const qrCode = document.getElementById('qrCode').value;
+                if (!qrCode) {
+                    alert('Please enter a QR code');
+                    return;
+                }
+
+                try {
+                    const response = await fetch(`/api/blockchain/verify/${qrCode}`);
+                    const result = await response.json();
+                    
+                    const verificationResult = document.getElementById('verificationResult');
+                    verificationResult.innerHTML = `
+                        <div class="result-header">
+                            <h3 class="result-title">Verification Result</h3>
+                            <span class="result-status ${result.blockchain_verified ? 'status-valid' : 'status-invalid'}">
+                                ${result.blockchain_verified ? 'Valid' : 'Invalid'}
+                            </span>
+                        </div>
+                        <div class="result-details">
+                            <div class="detail-item">
+                                <span class="detail-label">Product Name:</span>
+                                <span class="detail-value">${result.name}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Manufacturer:</span>
+                                <span class="detail-value">${result.manufacturer_name}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Current Owner:</span>
+                                <span class="detail-value">${result.current_owner}</span>
+                            </div>
+                        </div>
+                    `;
+                    verificationResult.classList.add('active');
+                } catch (error) {
+                    console.error('Error verifying product:', error);
+                    alert('Error verifying product');
+                }
+            }
+
+            // Function to transfer to customer
+            async function transferToCustomer() {
+                const productId = document.getElementById('productId').value;
+                const customerAddress = document.getElementById('customerAddress').value;
+                
+                if (!productId || !customerAddress) {
+                    alert('Please fill in all fields');
+                    return;
+                }
+
+                try {
+                    const response = await fetch('/api/blockchain/transfer', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            product_id: productId,
+                            to_address: customerAddress
+                        })
+                    });
+                    
+                    const result = await response.json();
+                    if (result.success) {
+                        alert('Product transferred successfully');
+                        loadMyProducts(); // Refresh my products
+                    } else {
+                        alert('Error transferring product: ' + result.error);
+                    }
+                } catch (error) {
+                    console.error('Error transferring product:', error);
+                    alert('Error transferring product');
+                }
+            }
+
+            // Function to logout
+            function logout() {
+                localStorage.removeItem('token');
+                localStorage.removeItem('user');
+                window.location.href = '/';
+            }
+        });
+    </script>
+</body>
+</html> 
