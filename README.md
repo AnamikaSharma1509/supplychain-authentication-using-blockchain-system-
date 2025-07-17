@@ -1,4 +1,5 @@
 ```markdown
+# Anamika blockchain project
 # Supply Chain Authentication Using Blockchain System
 
 A blockchain-powered web application designed for **secure product authentication and traceability** in the supply chain. This system uses **Ethereum's Sepolia testnet** to log product transfers immutably and supports **MetaMask integration** for wallet-based authentication and transactions.
